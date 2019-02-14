@@ -3,16 +3,36 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cheese: ['cheddar', 'swiss', 'brie', 'gruyere', 'mozzarella'],
+      userInput: ""
+    }
+  }
+
+  filterTheArray = (userInput) => {
+    let unfilteredCheese = this.state.cheese;
+    let filteredCheese = [];
+
+    for (let i = 0; i < unfilteredCheese.length; i++) {
+      if (unfilteredCheese[i].includes(userInput)) {
+        filteredCheese.push(unfilteredCheese[i])
+      }
+    }
+    this.setState({ cheese: filteredCheese })
+  }
+
   render() {
+    let displayCheese = this.state.cheese.map((value) => {
+      return <h2>{[value]}</h2>
+    })
+
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <input onChange={(e) => this.filterTheArray(e.target.value)}></input>
+        {displayCheese}
       </div>
     );
   }
